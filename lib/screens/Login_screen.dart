@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:to_do_list/AppRoutes.dart';
 import 'package:to_do_list/cubit/LogCubit/cubit/log_cubit_cubit.dart';
+import 'package:to_do_list/helpers/validation.dart';
+import 'package:to_do_list/widgets/Custom_TextForm_Field.dart';
 import 'package:to_do_list/widgets/Custom_button.dart';
 import 'package:to_do_list/widgets/Row_Singin_Singup.dart';
 import 'package:to_do_list/widgets/gradient_Background.dart';
-import 'package:to_do_list/widgets/text_from_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required String message});
@@ -31,9 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
               );
               Navigator.pushNamed(context, AppRoutes.dashboard);
             } else if (state is LogCubitFailure) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
                   backgroundColor: Colors.red,
@@ -71,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Let’s help you meet your tasks',
                         ),
                         SizedBox(height: 20),
-                        Image.asset('assets/image/my_notifications_rjej 1.png'),
+                        Image.asset('assets/image/my_notifications_rjej1.png'),
                         const SizedBox(height: 20),
                         CustomTextFormField(
                           controller: emailController,
@@ -103,10 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomButton(
                           text: 'Login',
                           onPressed: () {
-                            context.read<LogCubitCubit>().login(
-                                  emailController.text,
-                                  passwordController.text,
-                                );
+                          loginValidators(context, passwordController, emailController, state);
                           },
                         ),
                         const SizedBox(height: 50),
@@ -117,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             text2: 'Sign up',
                             onTap: () {
                               Navigator.pushNamed(
-                                  context, AppRoutes.registration);
+                                context,
+                                AppRoutes.registration,
+                              );
                             },
                           ),
                         ),

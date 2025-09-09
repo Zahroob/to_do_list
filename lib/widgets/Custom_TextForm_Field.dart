@@ -12,6 +12,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final Widget? icon;
   final bool? obscureText;
+  
 
   @override
   State<CustomTextFormField> createState() => _TextFromFieldState();

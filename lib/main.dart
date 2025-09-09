@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,11 +8,13 @@ import 'package:to_do_list/Hive/task_model.dart';
 import 'package:to_do_list/Hive/task_repository.dart';
 import 'package:to_do_list/cubit/LogCubit/cubit/log_cubit_cubit.dart';
 import 'package:to_do_list/cubit/TaskCubit/task_cubit.dart';
+import 'package:to_do_list/helpers/AuthWrapper.dart';
 import 'package:to_do_list/model/task_model_adapter.dart';
 import 'package:to_do_list/screens/Get_Start_Screen.dart';
 import 'package:to_do_list/screens/Login_screen.dart';
 import 'package:to_do_list/screens/dashboard_screen.dart';
 import 'package:to_do_list/screens/registration_Screen.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,6 +32,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => TaskCubit(TaskRepository())),
@@ -61,6 +65,9 @@ class MyApp extends StatelessWidget {
                 builder: (_) => DashboardScreen(message: args ?? "صفحة التحكم"),
               );
 
+            case AppRoutes.authWrapper:
+              return MaterialPageRoute(builder: (_) => const AuthWrapper());
+
             default:
               return MaterialPageRoute(
                 builder: (_) => const Scaffold(
@@ -69,9 +76,7 @@ class MyApp extends StatelessWidget {
               );
           }
         },
-        initialRoute: '/',
-
-        
+        home: AuthWrapper(),
       ),
     );
   }

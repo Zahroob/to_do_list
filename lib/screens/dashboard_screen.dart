@@ -1,4 +1,5 @@
 import 'package:analog_clock/analog_clock.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_list/widgets/CarddViewTasks.dart';
 import 'package:to_do_list/widgets/gradient_Background.dart';
@@ -63,6 +64,14 @@ class DashboardScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Text('Tasks List', style: TextStyle(fontSize: 12)),
+                    Spacer(),
+                    IconButton(
+                      color: Colors.black,
+                      icon: const Icon(Icons.logout),
+                      onPressed: () async {
+                        await FirebaseAuth.instance.signOut();
+                      },
+                    ),
                   ],
                 ),
               ),
