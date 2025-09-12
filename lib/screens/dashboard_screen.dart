@@ -1,6 +1,7 @@
 import 'package:analog_clock/analog_clock.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_list/screens/Login_screen.dart';
 import 'package:to_do_list/widgets/CarddViewTasks.dart';
 import 'package:to_do_list/widgets/gradient_Background.dart';
 
@@ -56,7 +57,20 @@ class DashboardScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 23),
-              _getAnalogClock(),
+              AnalogClock(
+                decoration: BoxDecoration(
+                  color: Color(0XFFFFECE4),
+                  shape: BoxShape.circle,
+                ),
+                hourHandColor: Color(0XFFD36232),
+                minuteHandColor: Color(0XFFBCB9B9),
+                secondHandColor: Color(0XFFFAA27C),
+                numberColor: Color(0XFFBE4713),
+                showTicks: false,
+                showDigitalClock: false,
+                height: 120,
+                width: 120,
+              ),
               const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.only(left: 27),
@@ -65,12 +79,24 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     const Text('Tasks List', style: TextStyle(fontSize: 12)),
                     Spacer(),
-                    IconButton(
-                      color: Colors.black,
-                      icon: const Icon(Icons.logout),
-                      onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(right: 25),
+                      child: IconButton(
+                        color: Colors.black,
+                        icon: const Icon(Icons.logout),
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut();
+                          if (context.mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const LoginScreen(message: 'welcome'),
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -81,23 +107,6 @@ class DashboardScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  AnalogClock _getAnalogClock() {
-    return AnalogClock(
-      decoration: BoxDecoration(
-        color: Color(0XFFFFECE4),
-        shape: BoxShape.circle,
-      ),
-      hourHandColor: Color(0XFFD36232),
-      minuteHandColor: Color(0XFFBCB9B9),
-      secondHandColor: Color(0XFFFAA27C),
-      numberColor: Color(0XFFBE4713),
-      showTicks: false,
-      showDigitalClock: false,
-      height: 120,
-      width: 120,
     );
   }
 }

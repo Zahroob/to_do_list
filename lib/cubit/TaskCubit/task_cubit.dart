@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:to_do_list/Hive/task_repository.dart';
-import '../../Hive/task_model.dart' show TaskModel;
+import 'package:to_do_list/HiveTask/task_repository.dart';
+import '../../HiveTask/task_model.dart' show TaskModel;
 
 class TaskCubit extends Cubit<List<TaskModel>> {
   final TaskRepository repository;

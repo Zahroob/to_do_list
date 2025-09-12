@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_list/Hive/task_model.dart';
+import 'package:to_do_list/HiveTask/task_model.dart';
 
 class TaskItem extends StatelessWidget {
   const TaskItem({
